@@ -1,0 +1,321 @@
+09.27 5:19 pm
+33
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار 1 الصف الثالث الاعدادى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+        body { background: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; position: relative; overflow-x: hidden; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 40%); filter: blur(40px); z-index: 0; }
+        .global-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-20deg); font-size: 3.5rem; font-weight: 900; color: rgba(255, 255, 255, 0.03); white-space: nowrap; pointer-events: none; z-index: 1; }
+        .container { width: 100%; max-width: 680px; background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 2; }
+        .header-title { text-align: center; background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.2)); border: 1px solid rgba(56, 189, 248, 0.3); color: #ffffff; padding: 16px; border-radius: 16px; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; line-height: 1.5; }
+        #login-section { display: flex; flex-direction: column; gap: 14px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; text-align: right; }
+        .form-group label { font-size: 0.9rem; color: #38bdf8; font-weight: 700; }
+        .form-control { background-color: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 12px 16px; color: #f8fafc; font-size: 0.95rem; outline: none; }
+        .form-control:focus { border-color: #38bdf8; }
+        .btn-start { background: linear-gradient(135deg, #38bdf8, #6366f1); color: white; padding: 14px; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-start:hover { transform: translateY(-2px); }
+        #exam-section { display: none; }
+        .teacher-tag { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 6px 12px; color: #38bdf8; font-size: 0.82rem; font-weight: bold; text-align: center; margin-bottom: 12px; }
+        .status-panel { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .timer-badge { background: rgba(251, 191, 36, 0.1); color: #fbbf24; padding: 6px 14px; border-radius: 10px; font-size: 0.95rem; font-weight: bold; font-family: monospace; border: 1px solid rgba(251, 191, 36, 0.2); }
+        .user-badge { color: #38bdf8; font-weight: 600; font-size: 0.88rem; }
+        .question-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; margin-bottom: 15px; background-color: rgba(15, 23, 42, 0.5); padding: 8px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); max-height: 120px; overflow-y: auto; }
+        .grid-btn { background-color: rgba(30, 41, 59, 0.6); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 6px 0; font-size: 0.8rem; cursor: pointer; text-align: center; font-weight: bold; }
+        .grid-btn.active { background-color: #38bdf8; color: #0f172a; font-weight: bold; border-color: #38bdf8; }
+        .grid-btn.answered { border-color: #4ade80; color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+        .question-card { background-color: rgba(15, 23, 42, 0.6); border-radius: 16px; padding: 18px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 15px; position: relative; }
+        .question-content { text-align: right; }
+        .question-header { display: flex; justify-content: space-between; color: #38bdf8; font-size: 0.85rem; margin-bottom: 10px; font-weight: 600; }
+        .question-text { font-size: 0.98rem; line-height: 1.6; color: #f1f5f9; margin-bottom: 14px; font-weight: 500; }
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .option-item { background-color: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #e2e8f0; font-size: 0.9rem; transition: 0.2s; }
+        .option-item:hover { border-color: #38bdf8; background: rgba(56, 189, 248, 0.05); }
+        .option-item.selected { border-color: #38bdf8; background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.2)); color: white; font-weight: bold; }
+        .action-buttons { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 8px; margin-top: 12px; }
+        .btn { padding: 12px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 0.88rem; text-align: center; }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-prev, .btn-next { background-color: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .btn-submit { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        #result-section { display: none; text-align: center; }
+        .result-title { font-size: 1.25rem; color: #38bdf8; margin-bottom: 8px; font-weight: bold; }
+        .certificate-card { background: linear-gradient(135deg, #1e293b, #0f172a); border: 3px double #fbbf24; border-radius: 16px; padding: 20px; margin: 20px 0; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; }
+        .cert-header { font-family: 'Reem Kufi', sans-serif; color: #fbbf24; font-size: 1.5rem; margin-bottom: 5px; }
+        .cert-sub { color: #cbd5e1; font-size: 0.85rem; margin-bottom: 15px; }
+        .cert-name { font-size: 1.4rem; color: #38bdf8; font-weight: bold; margin: 10px 0; border-bottom: 1px dashed #334155; padding-bottom: 5px; }
+        .cert-body { font-size: 0.95rem; line-height: 1.8; color: #f1f5f9; }
+        .cert-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #334155; font-size: 0.8rem; color: #94a3b8; }
+        .review-box { text-align: right; margin-top: 20px; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .review-title { color: #f43f5e; font-weight: bold; margin-bottom: 10px; font-size: 1rem; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+        .review-item { background: rgba(30, 41, 59, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 8px; border-right: 3px solid #f43f5e; font-size: 0.85rem; }
+        .correct-ans { color: #4ade80; font-weight: bold; }
+        .user-ans { color: #f43f5e; font-weight: bold; }
+        @media print { body * { visibility: hidden; } .certificate-card, .certificate-card * { visibility: visible; } .certificate-card { position: absolute; left: 0; top: 0; width: 100%; border: 2px solid #000; } }
+    </style>
+</head>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+    <div class="global-watermark">أ. محمد أمين نظير</div>
+    <div class="container">
+        <div class="header-title">
+            اختبار 1 الصف الثالث الاعدادى<br>
+            <span style="font-size:0.85rem; color:#94a3b8; font-weight:normal;">مادة العلوم والفيزياء والتفاعلات الكيميائية</span>
+        </div>
+        <div id="login-section">
+            <form onsubmit="startExam(event)">
+                <div class="form-group">
+                    <label>اسم الطالب الكامل:</label>
+                    <input type="text" id="student-name" class="form-control" placeholder="أدخل اسمك الثلاثي..." required>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label>كود الطالب الخاص بك:</label>
+                    <input type="password" id="student-code" class="form-control" placeholder="أدخل كودك الخاص..." required>
+                </div>
+                <button type="submit" class="btn-start" style="width:100%; margin-top:15px;">بدء الاختبار الآن  (المدة: 40 دقيقة)</button>
+            </form>
+        </div>
+        <div id="exam-section">
+            <div class="teacher-tag">‍ إعداد ومتابعة: أ. محمد أمين نظير</div>
+            <div class="status-panel">
+                <div class="timer-badge" id="timer-display">40:00</div>
+                <div class="user-badge"> <span id="display-student-name">الطالب</span></div>
+            </div>
+            <div class="question-grid" id="question-grid"></div>
+            <div class="question-card">
+                <div class="question-content">
+                    <div class="question-header">
+                        <span id="question-number-lbl">السؤال 1 من 40</span>
+                        <span id="question-type-lbl">اختيار من متعدد</span>
+                    </div>
+                    <div class="question-text" id="question-text"></div>
+                    <div class="options-list" id="options-container"></div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-prev" id="btn-prev" onclick="prevQuestion()">السابق</button>
+                <button class="btn btn-next" id="btn-next" onclick="nextQuestion()">التالي</button>
+                <button class="btn btn-submit" onclick="submitExam()">تسليم الاختبار </button>
+            </div>
+        </div>
+        <div id="result-section">
+            <div class="result-title"> اكتمل الاختبار بنجاح</div>
+            <div class="certificate-card" id="cert-card">
+                <div class="cert-header"> شهادة تقدير وتميز </div>
+                <div class="cert-sub">اختبار 1 - الصف الثالث الإعدادي</div>
+                <div>يشهد أستاذ المادة بأن الطالب/ة:</div>
+                <div class="cert-name" id="cert-student-name">...</div>
+                <div class="cert-body">
+                    قد أتم اختباره بنجاح وحصل على درجة:<br>
+                    <b id="cert-score" style="color:#fbbf24; font-size: 1.5rem;">0</b> من 40<br>
+                    بتقدير عام: <b id="cert-grade" style="color:#38bdf8;">...</b>
+                </div>
+                <div class="cert-footer">
+                    <div>التاريخ: <span id="cert-date"></span></div>
+                    <div>مدرس المادة: <b>أ. محمد أمين نظير</b></div>
+                </div>
+            </div>
+            <button class="btn btn-start" style="width:100%; margin-bottom:10px;" onclick="window.print()">طباعة / حفظ الشهادة ️</button>
+            <div class="review-box" id="review-container">
+                <div class="review-title">❌ مراجعة الأخطاء والإجابات الصحيحة:</div>
+                <div id="review-list"></div>
+            </div>
+            <button class="btn" style="background-color:#334155; color:white; width:100%; margin-top:15px;" onclick="location.reload()">إعادة الاختبار </button>
+        </div>
+        <div style="margin-top:15px; text-align:center; font-size:0.8rem; color:#64748b;">
+            جميع الحقوق محفوظة للأستاذ <b>محمد أمين نظير</b>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        const teacherName = "أ. محمد أمين نظير";
+        const rawQuestions = [
+            { id: 1, type: "mcq", text: `س1: [إعداد ${teacherName}] التفاعل الكيميائي هو عملية كسر الروابط في جزيئات المواد المتفاعلة وتكوين روابط جديدة في جزيئات:`, options: ["المواد الناتجة", "العوامل الحفازة", "المركبات الأيونية", "المحاليل المائية"], correct: 0 },
+            { id: 2, type: "mcq", text: `س2: [إعداد ${teacherName}] تفاعلات تفكك فيها بعض المركبات بالحرارة أو الضوء أو الكهرباء إلى مكونات بسيطة تُعرف بتفاعلات:`, options: ["الإحلال البسيط", "الانحلال", "الاتحاد المباشر", "الأكسدة والاختزال"], correct: 1 },
+            { id: 3, type: "mcq", text: `س3: [إعداد ${teacherName}] عند تسخين أكسيد الزئبق الأحمـر يتكون الزئبق الفضي ويتصاعد غاز:`, options: ["الهيدروجين", "الأكسجين", "ثاني أكسيد الكربون", "النيتروجين"], correct: 1 },
+            { id: 4, type: "mcq", text: `س4: [إعداد ${teacherName}] ترتيب العناصر الفلزية ترتيباً تنازلياً حسب درجة نشاطها الكيميائي يسمى:`, options: ["جدول مندليف", "متسلسلة النشاط الكيميائي", "التكافؤ الكيميائي", "التركيب الأيوني"], correct: 1 },
+            { id: 5, type: "mcq", text: `س5: [إعداد ${teacherName}] تفاعل حمض مع قلوي لتكوين ملح وماء يسمى تفاعل:`, options: ["التعادل", "الترسيب", "الإحلال البسيط", "الانحلال الحراري"], correct: 0 },
+            { id: 6, type: "mcq", text: "س6: [مهارات تفكير عليا - " + teacherName + "] تفاعل بين محلولي ملحين يتكون نتيجة له مادة غير ذائبة في الماء تسمى:", options: ["المحلول القلوي", "الراسب", "العامل المؤكسد", "العامل المختزل"], correct: 1 },
+            { id: 7, type: "mcq", text: `س7: [إعداد ${teacherName}] الماء الذي يحتوي على نسبة عالية من أملاح الكالسيوم والمغنيسيوم يسمى:`, options: ["الماء المقطر", "الماء العسر", "الماء النقي", "الماء الثقيل"], correct: 1 },
+            { id: 8, type: "mcq", text: `س8: [إعداد ${teacherName}] العملية الكيميائية التي تؤدي إلى زيادة نسبة الأكسجين أو نقص نسبة الهيدروجين هي:`, options: ["الاختزال", "الأكسدة", "الانحلال", "التعادل"], correct: 1 },
+            { id: 9, type: "mcq", text: `س9: [إعداد ${teacherName}] المادة التي تفقد إلكتروناً أو أكثر أثناء التفاعل الكيميائي تُعتبر:`, options: ["عامل مؤكسد", "عامل مختزل", "عامل حفاز", "حمضاً مركزاً"], correct: 1 },
+            { id: 10, type: "mcq", text: `س10: [إعداد ${teacherName}] عند تفاعل حمض الهيدروكلوريك المخفف مع برادة الحديد يتصاعد غاز يشتعل بفرقعة وهو:`, options: ["CO₂", "O₂", "H₂", "NO₂"], correct: 2 },
+            { id: 11, type: "mcq", text: "س11: [مهارات تفكير عليا - " + teacherName + "] يتفاعل الخارصين Zn مع حمض HCl المخفف بينما لا يتفاعل النحاس Cu مع نفس الحمض لأن:", options: ["النحاس يسبق الهيدروجين", "الخارصين يلي الهيدروجين", "الخارصين يسبق الهيدروجين في متسلسلة النشاط والنحاس يليه", "حمض HCl غير مركز"], correct: 2 },
+            { id: 12, type: "mcq", text: `س12: [إعداد ${teacherName}] الصيغة الكيميائية لكبريتات النحاس ذات اللون الأزرق هي:`, options: ["CuO", "CuSO₄", "CuCO₃", "CuCl₂"], correct: 1 },
+            { id: 13, type: "mcq", text: `س13: [إعداد ${teacherName}] عند وضع قطعة صغيرة من الصوديوم في الماء يتكون هيدروكسيد الصوديوم و:`, options: ["ينطلق أكسجين", "ينطلق هيدروجين بفرقعة حرارية", "يتكون راسب أحمر", "لا يحدث تفاعل"], correct: 1 },
+            { id: 14, type: "mcq", text: `س14: [إعداد ${teacherName}] المادة الصلبة السوداء الناتجة عند تسخين كربونات الكالسيوم أو كبريتات النحاس هي:`, options: ["أكسيد النحاس / أكسيد الفلز", "النحاس المترسب", "كبريتات الصوديوم", "هيدروكسيد الكالسيوم"], correct: 0 },
+            { id: 15, type: "mcq", text: "س15: [مهارات تفكير عليا - " + teacherName + "] يفضل عدم حفظ محلول نترات الفضة AgNO₃ في أوانٍ من الألومنيوم Al لأن:", options: ["الألومنيوم يتفاعل مع الماء", "الألومنيوم أنشط من الفضة فيحل محلها ويؤدي لتآكل الأواني", "الفضة أنشط من الألومنيوم", "المركب غير ثابت حرارياً"], correct: 1 },
+            { id: 16, type: "mcq", text: `س16: [إعداد ${teacherName}] الغاز الذي يعكر ماء الجير الرائق عند مروره لفترة قصيرة هو:`, options: ["CO₂", "O₂", "H₂", "SO₂"], correct: 0 },
+            { id: 17, type: "mcq", text: `س17: [إعداد ${teacherName}] عند تفاعل نترات الفضة AgNO₃ مع كلوريد الصوديوم NaCl يتكون راسب أبيض من:`, options: ["NaNO₃", "AgCl", "Ag₂O", "NaOH"], correct: 1 },
+            { id: 18, type: "mcq", text: `س18: [إعداد ${teacherName}] الاحتراق هو تفاعل كيميائي بين المادة وغاز ........ ينتج عنه حرارة وضوء:`, options: ["النيتروجين", "الأكسجين", "الهيدروجين", "ثاني أكسيد الكربون"], correct: 1 },
+            { id: 19, type: "mcq", text: "س19: [مهارات تفكير عليا - " + teacherName + "] ناتج الاحتراق غير التام للهيدروكربونات أو الكربون والذي ينتج عنه دقائق سوداء تترسب يسمى:", options: ["عادم السيارات", "السناج (الكربون)", "الغاز المائي", "رماد السجائر"], correct: 1 },
+            { id: 20, type: "mcq", text: `س20: [إعداد ${teacherName}] غاز سام جداً وبدون رائحة ينتج عن الاحتراق غير التام للوقود ويعتبر خطيراً للغاية:`, options: ["أول أكسيد الكربون CO", "ثاني أكسيد الكربون CO₂", "بخار الماء", "أكسيد النيتريك"], correct: 0 },
+            { id: 21, type: "mcq", text: `س21: [إعداد ${teacherName}] المادة القلوية العضوية الطبيعية الموجودة في أوراق نبات التبغ والتي تسبب الإدمان هي:`, options: ["القطران", "النيكوتين", "السناج", "المورفين"], correct: 1 },
+            { id: 22, type: "mcq", text: "س22: [مهارات تفكير عليا - " + teacherName + "] السائل الداكن اللزج الناتج عن احتراق التبغ والذي يترسب في الرئتين يسمى:", options: ["النيكوتين", "القطران", "أول أكسيد الكربون", "الحويصلة الهوائية"], correct: 1 },
+            { id: 23, type: "mcq", text: `س23: [إعداد ${teacherName}] التلف والتمدد الداخلي في جدر الحويصلات الهوائية نتيجة التدخين يؤدي إلى مرض:`, options: ["سرطان الرئة", "الانتفاخ الرئوي", "الربو المزمن", "تصلب الشرايين"], correct: 1 },
+            { id: 24, type: "mcq", text: `س24: [إعداد ${teacherName}] استنشاق الأشخاص غير المدخنين للدخان المنبعث من سجائر المدخنين القريبين يُعرف بـ:`, options: ["التدخين التقليدي", "التدخين الإلكتروني", "التدخين السلبي", "التدخين المباشر"], correct: 2 },
+            { id: 25, type: "mcq", text: `س25: [إعداد ${teacherName}] يتغير لون غاز أكسيد النيتريك NO عديم اللون إلى البني المحمر عند تعرضه للهواء بسبب تكون:`, options: ["N₂O", "NO₂ (ثاني أكسيد النيتروجين)", "N₂O₅", "NH₃"], correct: 1 },
+            { id: 26, type: "mcq", text: "س26: [مهارات تفكير عليا - " + teacherName + "] تشتقل قطعة الصوف الفولاذي المبللة بالبنزين في زمن أقل من قطعة الورق المبللة بالماء لأن:", options: ["الماء يمتص الحرارة ويؤخر الوصول لدرجة الاشتعال", "البنزين لا يشتعل", "الورق أسرع اشتعالاً", "الفولاذ مادة عازلة"], correct: 0 },
+            { id: 27, type: "mcq", text: `س27: [إعداد ${teacherName}] المحول الحفزي في السيارات الحديثة يعمل على:`, options: ["زيادة استهلاك الوقود", "تحويل الغازات السامة الناتجة عن الاحتراق إلى مواد آمنة", "زيادة التلوث البيئي", "تبريد المحرك فقط"], correct: 1 },
+            { id: 28, type: "mcq", text: `س28: [إعداد ${teacherName}] الغازات الحمضية كأكاسيد الكبريت والنيتروجين عند ذوبانها في مياه الأمطار تسبب:`, options: ["الأمطار الحمضية", "الاحتباس الحراري فقط", "زيادة خضرة الأشجار", "تكون الماء العسر"], correct: 0 },
+            { id: 29, type: "mcq", text: `س29: [إعداد ${teacherName}] عند إضافة دليل اليونيفرسال إلى محلول متعادل مثل كلوريد الصوديوم يتحول اللون إلى:`, options: ["الأحمر", "الأخضر", "البنفسجي", "الأصفر"], correct: 1 },
+            { id: 30, type: "mcq", text: "س30: [مهارات تفكير عليا - " + teacherName + "] أجهزة غسل الغازات الحمضية والفلاتر على مداخن المصانع تهدف إلى:", options: ["تقليل كفاءة المصنع", "معالجة وترسيب الملوثات والغازات السامة قبل خروجها للهواء", "زيادة انبعاث الكربون", "إنتاج الطاقة الكهربائية"], correct: 1 },
+            { id: 31, type: "mcq", text: `س31: [إعداد ${teacherName}] العوامل الحفازة هي مواد كيميائية تعمل على:`, options: ["تغيير سرعة التفاعل دون أن تتغير", "زيادة كتلة الناتج", "استهلاك المتفاعلات فقط", "إيقاف التفاعل كلياً"], correct: 0 },
+            { id: 32, type: "mcq", text: `س32: [إعداد ${teacherName}] العناصر الفلزية تعتبر عوامل مختزلة لأن ذراتها تميل أثناء التفاعل إلى:`, options: ["فقد إلكترونات", "اكتساب إلكترونات", "مشاركة البروتونات", "عدم التفاعل"], correct: 0 },
+            { id: 33, type: "mcq", text: `س33: [إعداد ${teacherName}] عند إمرار غاز الهيدروجين H₂ على أكسيد النحاس الأسود الساخن CuO يحدث للهيدروجين عملية:`, options: ["اختزال", "أكسدة", "انحلال", "تعادل"], correct: 1 },
+            { id: 34, type: "mcq", text: "س34: [مهارات تفكير عليا - " + teacherName + "] تفاعل الماغنيسيوم مع البروم Mg + Br₂ ➔ Mg²⁺ + 2Br⁻ يعتبر البروم فيه:", options: ["عافلاً مختزلاً", "عافلاً مؤكسداً لأنه اكتسب إلكترونات", "حمضاً قويًا", "مادة غير نشطة"], correct: 1 },
+            { id: 35, type: "mcq", text: `س35: [إعداد ${teacherName}] يتكون السناج برائحة ودخان كثيف عند حرق قش الأرز بسبب:`, options: ["الاحتراق التام في وفرة من O₂", "الاحتراق غير التام نتيجة تكدس الأكوام وعدم وصول كميات مناسبة من الأكسجين", "وجود الماء العسر", "زيادة نسبة الهيدروجين"], correct: 1 },
+            { id: 36, type: "tf", text: `س36: [صح أم خطأ - إعداد ${teacherName}] الانحلال الحراري لنترات الصوديوم ينتج عنه نيتريت الصوديوم ويتصاعد غاز الأكسجين.`, options: ["صح", "خطأ"], correct: 0 },
+            { id: 37, type: "tf", text: "س37: [صح أم خطأ - مهارات عليا - " + teacherName + "] يحل النحاس محل الهيدروجين في الأحماض المخففة بسهولة متصاعداً غاز الهيدروجين.", options: ["صح", "خطأ"], correct: 1 },
+            { id: 38, type: "tf", text: `س38: [صح أم خطأ - إعداد ${teacherName}] الأكسدة والاختزال عمليتان متلازمتان تحدثان في نفس الوقت.`, options: ["صح", "خطأ"], correct: 0 },
+            { id: 39, type: "tf", text: `س39: [صح أم خطأ - إعداد ${teacherName}] التدخين الإلكتروني يُعتبر آمناً تماماً ولا يسبب أي إدمان أو أضرار صحية للقلب والرئتين.`, options: ["صح", "خطأ"], correct: 1 },
+            { id: 40, type: "tf", text: "س40: [صح أم خطأ - مهارات عليا - " + teacherName + "] يزيد غاز أول أكسيد الكربون من قدرة الهيموجلوبين على حمل الأكسجين في الدم.", options: ["صح", "خطأ"], correct: 1 }
+        ];
+        let questionsData = [];
+        let currentIdx = 0;
+        let userAnswers = [];
+        let timerSeconds = 40 * 60;
+        let timerInterval = null;
+        let studentInfo = { name: '', code: '' };
+        function startExam(e) {
+            e.preventDefault();
+            studentInfo.name = document.getElementById('student-name').value.trim();
+            studentInfo.code = document.getElementById('student-code').value.trim();
+            questionsData = [...rawQuestions];
+            userAnswers = new Array(questionsData.length).fill(null);
+            document.getElementById('display-student-name').innerText = studentInfo.name;
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('exam-section').style.display = 'block';
+            renderGrid();
+            loadQuestion(0);
+            startTimer();
+        }
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                    return;
+                }
+                timerSeconds--;
+                const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+                const s = (timerSeconds % 60).toString().padStart(2, '0');
+                document.getElementById('timer-display').innerText = `${m}:${s}`;
+            }, 1000);
+        }
+        function renderGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < questionsData.length; i++) {
+                const btn = document.createElement('div');
+                btn.className = `grid-btn ${i === currentIdx ? 'active' : ''} ${userAnswers[i] !== null ? 'answered' : ''}`;
+                btn.innerText = i + 1;
+                btn.onclick = () => loadQuestion(i);
+                grid.appendChild(btn);
+            }
+        }
+        function loadQuestion(index) {
+            currentIdx = index;
+            const q = questionsData[index];
+            document.getElementById('question-number-lbl').innerText = `السؤال ${index + 1} من ${questionsData.length}`;
+            document.getElementById('question-type-lbl').innerText = q.type === 'mcq' ? 'اختيار من متعدد' : 'صح أم خطأ';
+            document.getElementById('question-text').innerText = q.text;
+            const optsBox = document.getElementById('options-container');
+            optsBox.innerHTML = '';
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[index] === optIdx;
+                const item = document.createElement('div');
+                item.className = `option-item ${isSelected ? 'selected' : ''}`;
+                item.onclick = () => selectOption(optIdx);
+                item.innerHTML = `<span>${optText}</span>`;
+                optsBox.appendChild(item);
+            });
+            document.getElementById('btn-prev').disabled = index === 0;
+            document.getElementById('btn-next').disabled = index === questionsData.length - 1;
+            renderGrid();
+        }
+        function selectOption(optIdx) {
+            userAnswers[currentIdx] = optIdx;
+            loadQuestion(currentIdx);
+        }
+        function prevQuestion() { if (currentIdx > 0) loadQuestion(currentIdx - 1); }
+        function nextQuestion() { if (currentIdx < questionsData.length - 1) loadQuestion(currentIdx + 1); }
+        function calculateGrade(score) {
+            const percentage = (score / 40) * 100;
+            if (percentage >= 90) return "ممتاز  (مستوى راقٍ جداً)";
+            if (percentage >= 80) return "جيد جداً ";
+            if (percentage >= 65) return "جيد ";
+            if (percentage >= 50) return "مقبول 🤏";
+            return "يحتاج إلى مراجعة وتكرار ⚠️";
+        }
+        function submitExam() {
+            clearInterval(timerInterval);
+            let score = 0;
+            let wrongListHTML = "";
+            let wrongQuestionsNum = [];
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                if (userAns === q.correct) {
+                    score++;
+                } else {
+                    wrongQuestionsNum.push(idx + 1);
+                    const userText = userAns !== null ? q.options[userAns] : "لم يُجب";
+                    const correctText = q.options[q.correct];
+                    wrongListHTML += `
+                        <div class="review-item">
+                            <div><b>س${idx + 1}:</b> ${q.text}</div>
+                            <div>إجابتك: <span class="user-ans">${userText}</span></div>
+                            <div>الإجابة الصحيحة: <span class="correct-ans">${correctText}</span></div>
+                        </div>`;
+                }
+            });
+            const timeSpentSec = (40 * 60) - timerSeconds;
+            const spentM = Math.floor(timeSpentSec / 60);
+            const spentS = timeSpentSec % 60;
+            const gradeTitle = calculateGrade(score);
+            document.getElementById('cert-student-name').innerText = studentInfo.name;
+            document.getElementById('cert-score').innerText = score;
+            document.getElementById('cert-grade').innerText = gradeTitle;
+            document.getElementById('cert-date').innerText = new Date().toLocaleDateString('ar-EG');
+            const revBox = document.getElementById('review-list');
+            if (wrongQuestionsNum.length === 0) {
+                revBox.innerHTML = `<div style="color:#4ade80; text-align:center;"> أبدعت يا بطل! جميع إجاباتك صحيحة 100%.</div>`;
+            } else {
+                revBox.innerHTML = wrongListHTML;
+            }
+            document.getElementById('exam-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+            sendToEmail(studentInfo.name, studentInfo.code, score, spentM, spentS, gradeTitle, wrongQuestionsNum);
+        }
+        function sendToEmail(name, code, score, m, s, grade, wrongArr) {
+            let wrongText = wrongArr.length > 0 ? wrongArr.join(', ') : 'لا يوجد أخطاء ';
+            fetch("https://formsubmit.co/ajax/aseer010moh@gmail.com", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    _subject: ` نتيجة اختبار 1 الصف الثالث الإعدادي - ${name}`,
+                    "اسم الطالب": name,
+                    "كود الطالب": code,
+                    "الدرجة": `${score} / 40`,
+                    "التقدير": grade,
+                    "الوقت المستغرق": `${m} دقيقة و ${s} ثانية`,
+                    "أرقام الأسئلة الخاطئة": wrongText
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log("تم الإرسال بنجاح للإيميل!", data))
+            .catch(error => console.error("خطأ بالإرسال:", error));
+        }
+    </script>
+</body>
+</html>
+
